@@ -9,8 +9,8 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-const url = 'mongodb://localhost:27017';
-const dbName = 'myproject';
+const url = 'mongodb+srv://Nerloggz:nerlozyss622@clubv-dev-hwg8b.mongodb.net/test?retryWrites=true';
+const dbName = 'test';
 
 MongoClient.connect(url, function(err, client) {
   assert.equal(null, err);
