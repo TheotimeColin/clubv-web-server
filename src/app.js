@@ -13,6 +13,8 @@ const url = 'mongodb+srv://Nerloggz:nerlozyss622@clubv-dev-hwg8b.mongodb.net/tes
 const dbName = 'test';
 
 MongoClient.connect(url, function(err, client) {
+  if (!client) console.log(err)
+  
   console.log("Connected successfully to server");
  
   const db = client.db(dbName);
