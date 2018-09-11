@@ -21,11 +21,6 @@ MongoClient.connect(url, function(err, client) {
   client.close();
 });
 
-connection.connect(function(err) {
-  if (err) throw err
-  console.log('You are now connected...')
-})
-
 app.get('/posts', (req, res) => {
   res.send([])
 })
