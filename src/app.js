@@ -2,19 +2,24 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-const mysql = require('mysql')
+const MongoClient = require('mongodb').MongoClient;
 
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-const connection = mysql.createConnection({
-  host: 'theotimester.mysql.db',
-  user: 'theotimester',
-  password: 'Nerlozyss622',
-  database: 'theotimester'
-})
+const url = 'mongodb://localhost:27017';
+const dbName = 'myproject';
+
+MongoClient.connect(url, function(err, client) {
+  assert.equal(null, err);
+  console.log("Connected successfully to server");
+ 
+  const db = client.db(dbName);
+ 
+  client.close();
+});
 
 connection.connect(function(err) {
   if (err) throw err
@@ -22,10 +27,7 @@ connection.connect(function(err) {
 })
 
 app.get('/posts', (req, res) => {
-  connection.query('SELECT * FROM vrp_user_identities LIMIT 300', function(err, results) {
-    if (err) throw err
-    res.send(results)
-  })
+  res.send([])
 })
 
 app.listen(process.env.PORT || 8081)
