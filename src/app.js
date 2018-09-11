@@ -10,10 +10,10 @@ app.use(bodyParser.json())
 app.use(cors())
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'fivem_1'
+  host: 'theotimester.mysql.db',
+  user: 'theotimester',
+  password: 'Nerlozyss622',
+  database: 'theotimester'
 })
 
 connection.connect(function(err) {
