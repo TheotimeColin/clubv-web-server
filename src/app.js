@@ -63,12 +63,11 @@ const User = sequelize.define('vrp_user_identities', {
 });
 
 app.post('/posts', (req, res) => {
-  let options = {
+  let options = Object.assign({
     search: {},
     limit: 30,
     page: 0,
-    ...req.body
-  }
+  }, req.body)
   
   let params = {
     order: [ ['user_id', 'DESC'] ],
@@ -83,11 +82,10 @@ app.post('/posts', (req, res) => {
     let pages = Math.ceil(data.count / options.limit) - 1
     let offset = options.limit * options.page
     
-    params = {
+    params = Object.assign({
       limit: options.limit,
-      offset: offset,
-      ...params
-    }
+      offset: offset
+    }, params)
 
     User.findAll(params).then(users => {
       res.send({
