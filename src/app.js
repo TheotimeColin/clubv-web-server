@@ -7,6 +7,8 @@ const mysql = require('mysql')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 
+const UserEntity = require('../entities/User')
+
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
@@ -17,7 +19,6 @@ const sequelize = new Sequelize('fivem_1', 'root', '', {
   dialect: 'mysql',
   operatorsAliases: false,
   define: { timestamps: false },
-  
   pool: {
     max: 5,
     min: 0,
@@ -26,27 +27,17 @@ const sequelize = new Sequelize('fivem_1', 'root', '', {
   }
 });
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
-const User = sequelize.define('vrp_user_identities', {
-  user_id: { type: Sequelize.INTEGER, primaryKey: true },
-  firstname: { type: Sequelize.STRING },
-  name: { type: Sequelize.STRING },
-  phone: { type: Sequelize.STRING }
+sequelize.authenticate().then(() => {
+  console.log('Connection has been established successfully.');
+}).catch(err => {
+  console.error('Unable to connect to the database:', err);
 });
+
+const User = sequelize.define('vrp_user_identities', UserEntity);
 
 app.post('/posts', (req, res) => {
   let options = Object.assign({
-    search: {},
-    limit: 30,
-    page: 0,
+    search: {}, limit: 30, page: 0,
   }, req.body)
   
   let params = {
@@ -58,7 +49,6 @@ app.post('/posts', (req, res) => {
   }
   
   User.findAndCountAll(params).then(data => {
-    
     let pages = Math.ceil(data.count / options.limit) - 1
     let offset = options.limit * options.page
     
