@@ -13,7 +13,9 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-mongoose.connect('mongodb+srv://Nerloggz:nerlozyss622@clubv-dev-hwg8b.mongodb.net/test?retryWrites=true');
+// mongoose.connect('mongodb+srv://Nerloggz:nerlozyss622@clubv-dev-hwg8b.mongodb.net/test?retryWrites=true');
+mongoose.connect('mongodb://localhost:27017');
+
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', () => {
